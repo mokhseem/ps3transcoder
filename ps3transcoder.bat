@@ -1,48 +1,48 @@
 @echo off
 title PS3 Transcoder
 cls
-echo v0.3.2
-echo ’¥ªãé ï ¯ ¯ª  ¡ã¤¥â ¨á¯®«ì§®¢ ­  ª ª à ¡®ç ï
+echo Ð¢ÐµÐºÑƒÑ‰Ð°Ñ Ð¿Ð°Ð¿ÐºÐ° Ð±ÑƒÐ´ÐµÑ‚ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð° ÐºÐ°Ðº Ñ€Ð°Ð±Ð¾Ñ‡Ð°Ñ
 set cwd=%cd%
-echo “ª ¦¨ ¯ ¯ªã á ¨áå®¤­ë¬ ä¨«ì¬®¬/á¥§®­®¬:
+echo Ð£ÐºÐ°Ð¶Ð¸ Ð¿Ð°Ð¿ÐºÑƒ Ñ Ð¸ÑÑ…Ð¾Ð´Ð½Ñ‹Ð¼ Ñ„Ð¸Ð»ÑŒÐ¼Ð¾Ð¼/ÑÐµÐ·Ð¾Ð½Ð¾Ð¼:
 set /p raw=
 set raw=%raw:"=%
-cd /d %raw%
-dir /d
-echo ‚ë¡¥à¨ ä¨«ì¬/á¥à¨î ¯®¤ å à¤á ¡ [Tab]:
+cd /d %raw% && dir /d
+echo Ð’Ñ‹Ð±ÐµÑ€Ð¸ Ñ„Ð¸Ð»ÑŒÐ¼/ÑÐµÑ€Ð¸ÑŽ Ð¿Ð¾Ð´ Ñ…Ð°Ñ€Ð´ÑÐ°Ð± [Tab]:
 set /p ep=
-set ep=%ep:"=%
-set ep=%raw%\%ep%
-choice /c yn /m "Cã¡â¨âàë ®â¤¥«ì­ë¬ ä ©«®¬"
+set ep=%raw%\%ep:"=%
+choice /c yn /m "CÑƒÐ±Ñ‚Ð¸Ñ‚Ñ€Ñ‹ Ð¾Ñ‚Ð´ÐµÐ»ÑŒÐ½Ñ‹Ð¼ Ñ„Ð°Ð¹Ð»Ð¾Ð¼"
 set chksub=%errorlevel%
-if %chksub% == 1 echo ‚ë¡¥à¨ ä ©« áã¡â¨âà®¢ (â®«ìª® *.ass): && goto extsubs
-if %chksub% == 2 echo ã¤ãâ ¢§ïâë ¯¥à¢ë¥ áã¡â¨âàë ¨§ ª®­â¥©­¥à  && goto name
+if %chksub% == 1 goto extsubs
+if %chksub% == 2 goto intsubs
 :extsubs
+echo Ð’Ñ‹Ð±ÐµÑ€Ð¸ Ñ„Ð°Ð¹Ð» ÑÑƒÐ±Ñ‚Ð¸Ñ‚Ñ€Ð¾Ð² (Ñ‚Ð¾Ð»ÑŒÐºÐ¾ *.ass):
 set /p sub=
-set sub=%sub:"=%
-set sub=%raw%\%sub%
+set sub=%raw%\%sub:"=%
+goto name
+:intsubs
+ffprobe -i "%ep%" 2>&1 | find "Subtitle"
+echo Ð’Ñ‹Ð±Ñ€Ð°Ð½Ñ‹ ÑÑƒÐ±Ñ‚Ð¸Ñ‚Ñ€Ñ‹ Ð¿Ð¾-ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ
 :name
 cd /d %cwd%
-echo Š ª ¡ã¤¥â ­ §ë¢ âìáï ä¨«ì¬/á¥à¨ï ­  ¢ëå®¤¥?
+echo ÐšÐ°Ðº Ð±ÑƒÐ´ÐµÑ‚ Ð½Ð°Ð·Ñ‹Ð²Ð°Ñ‚ÑŒÑÑ Ñ„Ð¸Ð»ÑŒÐ¼/ÑÐµÑ€Ð¸Ñ Ð½Ð° Ð²Ñ‹Ñ…Ð¾Ð´Ðµ?
 set /p final=
 mkdir temp && cd temp
-echo ¥à¥ª®¤¨à®¢ ­¨¥ § ©¬¥â ¬­®£® ¢à¥¬¥­¨ ¨ à¥áãàá®¢ ¯à®æ¥áá®à 
+echo ÐŸÐµÑ€ÐµÐºÐ¾Ð´Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð·Ð°Ð¹Ð¼ÐµÑ‚ Ð¼Ð½Ð¾Ð³Ð¾ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð¸ Ð¸ Ñ€ÐµÑÑƒÑ€ÑÐ¾Ð² Ð¿Ñ€Ð¾Ñ†ÐµÑÑÐ¾Ñ€Ð°
 pause
-rem Š®¯¨ï ¡¥§ §¢ãª 
 ffmpeg -i "%ep%" -c copy -an mute.mkv
-rem ¥à¥ª®¤¨à®¢ ­¨¥ ¢ å à¤á ¡
+:hardsub
 if %chksub% == 1 copy "%sub%" sub.ass && ffmpeg -i mute.mkv -vf "ass=sub.ass" hsub-mute.mkv
-if %chksub% == 2 ffmpeg -i mute.mkv -vf "subtitles=mute.mkv:stream_index=0" hsub-mute.mkv
+if %chksub% == 2 ffmpeg -i mute.mkv -vf subtitles=mute.mkv hsub-mute.mkv
 del mute.mkv
-rem ¥à¥ª®¤¨à®¢ ­¨¥ §¢ãª  ¢ „®«¡¨
-ffmpeg -sn -i hsub-mute.mkv -vn -sn -i "%ep%" -c:v copy -c copy -c:a ac3 hsub-dd.mkv
+:dolby
+ffmpeg -i hsub-mute.mkv -vn -i "%ep%" -c:v copy -c copy -c:a ac3 -sn hsub-dd.mkv
 del hsub-mute.mkv
-rem Œãªá¨­£ ¢ ¡«îà¥©-ª®­â¥©­¥à
+:remux
 echo MUXOPT --no-pcr-on-video-pid --new-audio-pes --hdmv-descriptors --vbr  --vbv-len=500 > remux.meta
 echo V_MPEG4/ISO/AVC, "%cd%\hsub-dd.mkv", insertSEI, contSPS, track=1, lang=rus >> remux.meta
 echo A_AC3, "%cd%\hsub-dd.mkv", track=2, lang=jpn >> remux.meta
-tsmuxer remux.meta remux.m2ts
-move remux.m2ts "..\%final%.m2ts" && cd ..
-rmdir /s /q temp
+tsmuxer remux.meta "..\%final%.m2ts"
+:end
+cd .. && rmdir /s /q temp
 pause
 exit
