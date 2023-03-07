@@ -1,7 +1,7 @@
 # PS3™ Transcoder
 Батник для перекодирования `.mkv` с субтитрами в совместимый с PlayStation®3 хардсаб.
 
-Ремуксинг происходит в `.m2ts` — стандартный формат медиаконтейнера для Blu-ray™ дисков, который не требует динамического перекодирования при стриминге через [PS3](http://www.ps3mediaserver.org)/[Universal Media Server](http://universalmediaserver.com), что критично для домашних медиа-серверов на слабых процессорах.
+Ремуксинг происходит в `.m2ts` — стандартный формат медиаконтейнера для Blu-ray™ дисков, который не требует динамического перекодирования при стриминге через [PS3](http://www.ps3mediaserver.org)/[Universal Media Server](http://universalmediaserver.com).
 
 ## Зависимости
 * [FFmpeg](https://ffmpeg.org/download.html)
